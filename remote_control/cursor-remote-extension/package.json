@@ -1,0 +1,100 @@
+{
+  "name": "cursor-remote-control",
+  "displayName": "Cursor Remote Control",
+  "description": "通过手机浏览器远程控制 Cursor Composer（复用 Python 自动化服务）",
+  "version": "0.1.0",
+  "publisher": "platformtest",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "cursorRemote.startServer",
+        "title": "Cursor Remote: 启动服务",
+        "icon": "$(play)"
+      },
+      {
+        "command": "cursorRemote.stopServer",
+        "title": "Cursor Remote: 停止服务",
+        "icon": "$(debug-stop)"
+      },
+      {
+        "command": "cursorRemote.toggleServer",
+        "title": "Cursor Remote: 切换服务",
+        "icon": "$(radio-tower)"
+      },
+      {
+        "command": "cursorRemote.copyMobileUrl",
+        "title": "Cursor Remote: 复制手机访问地址",
+        "icon": "$(copy)"
+      },
+      {
+        "command": "cursorRemote.openMobileUrl",
+        "title": "Cursor Remote: 在浏览器打开",
+        "icon": "$(globe)"
+      },
+      {
+        "command": "cursorRemote.showLog",
+        "title": "Cursor Remote: 查看日志",
+        "icon": "$(output)"
+      }
+    ],
+    "configuration": {
+      "title": "Cursor Remote Control",
+      "properties": {
+        "cursorRemote.pythonPath": {
+          "type": "string",
+          "default": "",
+          "description": "Python 可执行文件路径，留空则自动检测（python / py -3）"
+        },
+        "cursorRemote.port": {
+          "type": "number",
+          "default": 5000,
+          "minimum": 1024,
+          "maximum": 65535,
+          "description": "远程控制 Web 服务端口"
+        },
+        "cursorRemote.autoStart": {
+          "type": "boolean",
+          "default": false,
+          "description": "打开 Cursor 时自动启动远程服务"
+        }
+      }
+    },
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "cursorRemote.startServer"
+        },
+        {
+          "command": "cursorRemote.stopServer"
+        },
+        {
+          "command": "cursorRemote.copyMobileUrl"
+        },
+        {
+          "command": "cursorRemote.openMobileUrl"
+        },
+        {
+          "command": "cursorRemote.showLog"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "bundle": "node scripts/bundle-server.js",
+    "package": "npm run bundle && npx --yes @vscode/vsce package --allow-missing-repository"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0"
+  }
+}
